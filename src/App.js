@@ -1,31 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import "./styles.css";
 
-export default function App({ data, firstTabActive = false }) {
+export default function App({ data, closePrevious = false }) {
   const AccordionArray = new Array(data.length).fill(false);
-  AccordionArray[0] = firstTabActive;
   const [state, setState] = useState(AccordionArray);
   const [trigger, setTrigger] = useState({
     latch: true,
     changedIndex: null
   });
-  const previousAccordion = useRef(firstTabActive ? 0 : null);
-  console.log(previousAccordion.current);
+  const previousAccordion = useRef(null);
   useEffect(() => {
     const temp = [...state];
     temp[trigger.changedIndex] = !temp[trigger.changedIndex];
-    if (
-      previousAccordion.current !== null &&
-      previousAccordion.current !== trigger.changedIndex
-    ) {
-      temp[previousAccordion.current] = !temp[previousAccordion.current];
+    if (closePrevious) {
+      if ( previousAccordion.current !== null && previousAccordion.current !== trigger.changedIndex) {
+        temp[previousAccordion.current] = !temp[previousAccordion.current];
+      }
+      previousAccordion.current =
+        previousAccordion.current === trigger.changedIndex
+          ? null
+          : trigger.changedIndex;
     }
     setState(temp);
-    previousAccordion.current =
-      previousAccordion.current === trigger.changedIndex
-        ? null
-        : trigger.changedIndex;
   }, [trigger]);
+
   return (
     <div className="Accordion_container">
       {data.map((data, index) => {
@@ -52,9 +50,9 @@ function Accordion({ data, accordionState, setTrigger, index }) {
   };
   return (
     <div className="Accordion">
-      <div className="acc_header">
+      <div className="acc_header" role="button" onClick={updateState}>
         <span className="acc_title">{data.title}</span>
-        <button className="acc_btn" onClick={updateState}>
+        <button className="acc_btn">
           {accordionState ? "-" : "+"}
         </button>
       </div>
