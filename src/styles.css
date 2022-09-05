@@ -5,7 +5,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .Accordion_container {
-  padding: 20px;
+  padding: 40px;
 }
 .Accordion {
   border-bottom: 1px solid grey;
@@ -32,3 +32,12 @@
   margin-top: 16px;
 }
 
+@media only screen and (max-width: 450px) {
+  .Accordion_container { padding: 20px; }
+  .Accordion { padding: 16px; }
+  .acc_title { font-size: 16px; }
+  .acc_context { 
+    font-size: 16px;
+    margin-top: 0px; 
+  }
+}

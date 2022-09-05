@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./styles.css";
 
-export default function App({ data, closePrevious = false }) {
+export default function Accordion({ data, closePrevious = false }) {
   const AccordionArray = new Array(data.length).fill(false);
   const [state, setState] = useState(AccordionArray);
   const [trigger, setTrigger] = useState({
@@ -28,8 +28,8 @@ export default function App({ data, closePrevious = false }) {
     <div className="Accordion_container">
       {data.map((data, index) => {
         return (
-          <Accordion
-            key={data.id}
+          <AccordionEle
+            key={index}
             data={data}
             accordionState={state[index]}
             setTrigger={setTrigger}
@@ -41,7 +41,7 @@ export default function App({ data, closePrevious = false }) {
   );
 }
 
-function Accordion({ data, accordionState, setTrigger, index }) {
+function AccordionEle({ data, accordionState, setTrigger, index }) {
   const updateState = () => {
     setTrigger({
       latch: Date.now(),
