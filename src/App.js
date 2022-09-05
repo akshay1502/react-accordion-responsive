@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import "./styles.css";
 
-export default function App({ data }) {
+export default function App({ data, firstTabActive = false }) {
   const AccordionArray = new Array(data.length).fill(false);
+  AccordionArray[0] = firstTabActive;
   const [state, setState] = useState(AccordionArray);
   const [trigger, setTrigger] = useState({
     latch: true,
     changedIndex: null
   });
-  const previousAccordion = useRef(null);
+  const previousAccordion = useRef(firstTabActive ? 0 : null);
+  console.log(previousAccordion.current);
   useEffect(() => {
     const temp = [...state];
     temp[trigger.changedIndex] = !temp[trigger.changedIndex];

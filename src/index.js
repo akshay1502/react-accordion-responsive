@@ -9,6 +9,6 @@ const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <App data={data} />
+    <App data={data} firstTabActive={true}/>
   </StrictMode>
 );
